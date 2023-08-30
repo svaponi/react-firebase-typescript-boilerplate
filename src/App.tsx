@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://firebase.google.com/" target="_blank">
+        <a href="https://console.firebase.google.com/" target="_blank">
           <img
             src={firebaseLogo}
             className="logo firebase"

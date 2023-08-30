@@ -21,8 +21,8 @@ export interface AuthContextProps {
   user: User | null;
   isSignedIn: boolean;
   isLoadingUser: boolean;
-  logout: () => Promise<Error | undefined>;
-  signInWithGoogle: () => Promise<Error | undefined>;
+  logout: () => Promise<void>;
+  signInWithGoogle: () => Promise<User>;
 }
 
 export const AuthContext = createContext<AuthContextProps | null>(null);
@@ -58,25 +58,13 @@ export const AuthContextProvider = ({ children }: PropsWithChildren) => {
 
   const signInWithGoogle = useMemo(
     () => async () => {
-      try {
-        await signInWithPopup(auth, provider);
-      } catch (e: Error) {
-        return e;
-      }
+      const result = await signInWithPopup(auth, provider);
+      return result.user;
     },
     [],
   );
 
-  const logout = useMemo(
-    () => async () => {
-      try {
-        await signOut(auth);
-      } catch (e: Error) {
-        return e;
-      }
-    },
-    [],
-  );
+  const logout = useMemo(() => async () => await signOut(auth), []);
 
   const value = useMemo(() => {
     return {

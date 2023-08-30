@@ -8,14 +8,20 @@ function App() {
 
   async function handleLogin(event: SyntheticEvent) {
     event.preventDefault();
-    const error = await signInWithGoogle();
-    if (error) window.alert(error.message);
+    try {
+      await signInWithGoogle();
+    } catch (e) {
+      window.alert(e.message);
+    }
   }
 
   async function handleLogout(event: SyntheticEvent) {
     event.preventDefault();
-    const error = await logout();
-    if (error) window.alert(error.message);
+    try {
+      await logout();
+    } catch (e) {
+      window.alert(e.message);
+    }
   }
 
   return (
